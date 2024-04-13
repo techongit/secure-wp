@@ -1,0 +1,21 @@
+File: /etc/postfix/main.cf
+
+recipient_delimiter = +
+inet_interfaces = all
+inet_protocols = ipv4
+home_mailbox = Maildir/
+smtpd_sasl_type = dovecot
+smtpd_sasl_path = private/auth
+smtpd_sasl_local_domain = yourdomain.com
+smtpd_sasl_security_options = noanonymous
+broken_sasl_auth_clients = yes
+smtpd_sasl_auth_enable = yes
+smtpd_recipient_restrictions = permit networks, permit sasl authenticated, reject unauth destination
+smtpd_client_restrictions = permit_networks, permit_sasl_authenticated, reject_unknown_client_hostnas
+smtp_tls_security_level = may
+smtpd_tls_security_level = may
+smtp_tls_note_starttls_offer = yes
+smtpd_tls_loglevel = 1
+smtpd_tls_received_header = yes
+smtpd_helo_required = yes
+smtpd_helo_restrictions = permit_mynetworks, permit_sasl_authenticated, reject_unknown_helo_hostname

@@ -1,0 +1,29 @@
+dpkg-statoverride -update-add root sudo 4750 /bin/su
+
+
+
+nano /etc/fstab
+File: /etc/fstab
+
+# /etc/fstab: static file system information.
+#/ was on /dev/sdal during installation
+UUID=5b592c-0c1xk-b592c-b592c / ext4 errors=remount-ro 0 1
+#swap was on /dev/sda5 during installation
+errors remount-ro 0
+UUID-01a3e3-3e3-3e3-3e3 none swap sw 0 0
+tmpfs /run/shm tmpfs defaults,noexec,nosuid 0 0
+
+
+##
+swapon -s
+##COMMANDS
+
+echo 0 | tee /proc/sys/vm/swappiness
+echo vm.swappiness 0| tee -a /etc/sysctl.conf
+vm.swappiness = 0
+chown root: root /dev/sda5
+chmod 0600 /dev/sda5
+sudo reboot
+
+
+

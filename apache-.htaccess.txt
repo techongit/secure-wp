@@ -1,0 +1,23 @@
+Edit .htaccess file
+##BAN USERS ##
+order allow,deny
+allow from all
+deny from 103.233.194.106
+##END BAN USERS ##
+## PROTECT HTACCESS FILE ##
+<Files .htaccess>
+order allow, deny
+deny from all
+</Files>
+## END PROTECT HTACCESS FILE ##
+##PROTECT WP-CONFIG FILE #
+<Files wp-config.php> order allow,deny
+deny from all
+</Files>
+##END PROTECT WP-CONFIG FILE #
+##PROTECT WP-CRON FILE ##
+<Files wp-cron.php>
+order allow,deny
+allow from all
+</Files>
+## END PROTECT WP-CRON FILE ##

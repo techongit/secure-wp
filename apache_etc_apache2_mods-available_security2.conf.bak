@@ -1,0 +1,42 @@
+File: /etc/apache2/mods-available/security2.conf
+Modified
+<IfModule security2 module>
+# Default Debian dir for modsecurity's persistent data
+SecDataDir /var/cache/modsecurity
+# Include all the *.conf files in /etc/modsecurity.
+# Keeping your local configuration in that directory
+# will allow for an easy upgrade of THIS file and
+# make your life easier
+IncludeOptional /etc/modsecurity/*.conf
+Include /etc/modsecurity/activated_rules/*.conf
+</IfModule>File: /etc/apache2/mods-available/security2.conf
+Modified
+<IfModule security2 module>
+# Default Debian dir for modsecurity's persistent data
+SecDataDir /var/cache/modsecurity
+# Include all the *.conf files in /etc/modsecurity.
+# Keeping your local configuration in that directory
+# will allow for an easy upgrade of THIS file and
+# make your life easier
+IncludeOptional /etc/modsecurity/*.conf
+Include /etc/modsecurity/activated_rules/*.conf
+</IfModule>
+
+apt-get install libapache2-mod-security2
+mv /etc/modsecurity/mod-security2.conf-recommended /etc/modsecurity/modsecurity.conf
+
+FILE: Edit /etc/modsecurity/modsecurity.conf
+SecRuleEngine On
+SecRequestBodyAccess On
+#Enable XML request body parser.
+#Initiate XML Processor in case of xml content-type
+#
+SecRule REQUEST HEADERS:Content-Type "text/xml" \
+"id: '200000',phase:1,t:none, t:lowercase, pass, nolog,ctl:requestBodyProcessor-XML"
+
+wget https://github.com/SpiderLabs/owasp-modsecurity-crs/archive/master.zip
+cp -r owasp-modsecurity-crs-master/* /etc/modsecurity/
+
+mv /etc/modsecurity/modsecurity_crs_10_setup.conf.example /etc/modsecurity/modsecurity_crs_10_setup.conf
+
+ls /etc/modsecurity/base_rules | xargs -I {} ln -s /etc/modsecurity/base_rules/{} /etc/modsecurity/activated rules/{}

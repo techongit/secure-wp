@@ -1,0 +1,23 @@
+File: /etc/apache2/apache2.conf
+
+#Include generic snippets of statements
+IncludeOptional conf-enabled/*.conf
+#Include the virtual host configurations: IncludeOptional sites-enabled/*.conf
+
+<IfModule mod headers.c>
+Header always append X-Frame-Options SAMEORIGIN
+</IfModule>
+#Disable Old Protocol
+RewriteEngine On
+RewriteCond % (THE REQUEST) ! HTTP/1\.1$
+RewriteRule .* [F]
+# Disable Trace HTTP Requests
+TraceEnable Off
+#HTTPOnly Cookie
+<IfModule mod headers.c>
+Header edit Set-Cookie ^(.*)$ $1; HttpOnly; Secure
+</IfModule>
+#XSS Protection
+<IfModule mod headers.c>
+Header set X-XSS-Protection "1; mode-block"
+</IfModule>
