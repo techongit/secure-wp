@@ -1,0 +1,2 @@
+# secure-wp
+wp-secops
